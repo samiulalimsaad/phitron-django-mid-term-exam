@@ -17,10 +17,12 @@
                     <p>Price: ${{ car.price }}</p>
                     <p>Quantity: {{ car.quantity }}</p>
                 </div>
+                {% if user.is_authenticated %}
                 <form method="post" action="{% url 'buy_car' pk=car.id %}">
                     {% csrf_token %}
                     <button class="btn btn-success">Buy Now</button>
                 </form>
+                {% endif %}
             </div>
         </div>
     </div>

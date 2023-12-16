@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -60,7 +61,7 @@ class CarDetailView(DetailView):
             return self.render_to_response(context)
 
 
-class BuyCarView(FormView):
+class BuyCarView(LoginRequiredMixin, FormView):
     template_name = (
         "car_detail.html"  # You can keep this template or use a separate one
     )
