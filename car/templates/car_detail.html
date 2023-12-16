@@ -1,9 +1,7 @@
-{% extends 'base.html' %} {% block content %}
-
-<section class="container mx-auto my-8"></section>
+{% extends 'base.html' %} {%load tailwind_filters %} {% block content %}
 
 <section>
-    <div class="hero min-h-screen bg-base-200">
+    <div class="hero bg-base-200">
         <div class="hero-content flex-col lg:flex-row">
             <img
                 src="/media/{{ car.image }}"
@@ -18,9 +16,37 @@
                     <p>Brand: {{ car.brand.name }}</p>
                     <p>Price: ${{ car.price }}</p>
                 </div>
-                <button class="btn btn-success">Buy Now</button>
+                <form method="post" action="{% url 'buy_car' pk=car.id %}">
+                    {% csrf_token %}
+                    <button class="btn btn-success">Buy Now</button>
+                </form>
             </div>
         </div>
     </div>
+    <!-- Display existing comments -->
+</section>
+<section class="container mx-auto my-8">
+    <h3>Comments:</h3>
+    {% for comment in comments %}
+    <div class="chat chat-start">
+        <div class="chat-image avatar">
+            <div class="avatar online placeholder">
+                <div class="bg-neutral text-neutral-content rounded-full w-16">
+                    <span class="text-xl">{{ comment.user.username }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="chat-bubble">
+            <p>{{ comment.text }}</p>
+        </div>
+    </div>
+
+    {% endfor %}
+
+    <!-- Comment Form -->
+    <form method="post" action="{% url 'car_detail' pk=car.pk %}">
+        {% csrf_token %} {{ form|crispy }}
+        <button type="submit" class="btn btn-info">Add Comment</button>
+    </form>
 </section>
 {% endblock %}
