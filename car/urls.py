@@ -4,6 +4,7 @@ from car import views
 
 urlpatterns = [
     path("", views.HomePageView.as_view(), name="home"),
+    path("profile/<int:user_id>/", views.UserPurchasesView.as_view(), name="profile"),
     path("details/<int:pk>/", views.CarDetailView.as_view(), name="car_detail"),
     path(
         "buy/<int:pk>/",

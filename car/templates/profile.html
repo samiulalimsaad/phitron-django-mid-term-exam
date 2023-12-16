@@ -1,0 +1,28 @@
+{% extends 'base.html' %} {% block content %}
+<h2>{{ user.username }}'s Purchases</h2>
+
+{% if purchases %}
+<section class="container mx-auto">
+    <div class="grid grid-cols-3 items-cener gap-4 justify-evenly my-4">
+        {% for purchase in purchases %}
+
+        <div class="card card-compact bg-base-100 shadow-xl">
+            <figure class="h-96 overflow-hidden">
+                <img
+                    src="/media/{{purchase.car.image}}"
+                    alt="{{ purchase.car.name }}"
+                />
+            </figure>
+            <div class="card-body">
+                <h2 class="card-title">{{ purchase.car.name }}</h2>
+                <p>{{ purchase.car.brand.name }}</p>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+
+    {% else %}
+    <p>No purchases found for {{ user.username }}.</p>
+    {% endif %} {% endblock %}
+</section>

@@ -1,6 +1,7 @@
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect
-from django.views.generic import DetailView, TemplateView
+from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import FormView
 
 from car.form import BuyCarForm, CommentForm
@@ -80,3 +81,14 @@ class BuyCarView(FormView):
             self.request, "Invalid form submission. Please correct the errors."
         )
         return redirect("car_detail", pk=car_id)
+
+
+class UserPurchasesView(ListView):
+    template_name = "profile.html"  # Create this template
+    context_object_name = "purchases"
+    model = Buy
+
+    def get_queryset(self):
+        user_id = self.kwargs["user_id"]
+        user = User.objects.get(pk=user_id)
+        return Buy.objects.filter(user=user).order_by("-purchase_date")
