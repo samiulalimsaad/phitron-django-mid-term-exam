@@ -1,10 +1,12 @@
+from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import DetailView, TemplateView
+from django.views.generic.edit import FormView
 
-from car.form import CommentForm
+from car.form import BuyCarForm, CommentForm
 from comment.models import Comment
 
-from .models import Brand, Car
+from .models import Brand, Buy, Car
 
 
 class HomePageView(TemplateView):
@@ -54,3 +56,27 @@ class CarDetailView(DetailView):
             context = self.get_context_data()
             context["form"] = form
             return self.render_to_response(context)
+
+
+class BuyCarView(FormView):
+    template_name = (
+        "car_detail.html"  # You can keep this template or use a separate one
+    )
+    form_class = BuyCarForm
+
+    def form_valid(self, form):
+        car_id = self.kwargs["pk"]
+        car = Car.objects.get(pk=car_id)
+
+        # Perform the buying logic, create a Buy instance, etc.
+        Buy.objects.create(user=self.request.user, car=car)
+
+        messages.success(self.request, f"You have successfully bought {car.name}!")
+        return redirect("car_detail", pk=car_id)
+
+    def form_invalid(self, form):
+        car_id = self.kwargs["pk"]
+        messages.error(
+            self.request, "Invalid form submission. Please correct the errors."
+        )
+        return redirect("car_detail", pk=car_id)
