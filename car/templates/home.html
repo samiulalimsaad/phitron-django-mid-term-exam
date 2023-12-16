@@ -26,7 +26,11 @@
                 <h2 class="card-title">{{ car.name }}</h2>
                 <p>{{ car.brand.name }}</p>
                 <div class="card-actions justify-end">
-                    <button class="btn btn-success">View Details</button>
+                    <a
+                        href="{% url 'car_detail' pk=car.id %}"
+                        class="btn btn-success"
+                        >View Details</a
+                    >
                 </div>
             </div>
         </div>

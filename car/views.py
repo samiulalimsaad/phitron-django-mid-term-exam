@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from django.views.generic import TemplateView
+from django.views.generic import DetailView, TemplateView
 
 from .models import Brand, Car
 
@@ -25,3 +25,9 @@ class BrandBasedCarsView(TemplateView):
         context["brands"] = Brand.objects.all()
         context["brand_based_cars"] = Car.objects.filter(brand=brand)
         return context
+
+
+class CarDetailView(DetailView):
+    model = Car
+    template_name = "car_detail.html"
+    context_object_name = "car"

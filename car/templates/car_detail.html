@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% block content %}
+
+<section class="container mx-auto my-8"></section>
+
+<section>
+    <div class="hero min-h-screen bg-base-200">
+        <div class="hero-content flex-col lg:flex-row">
+            <img
+                src="/media/{{ car.image }}"
+                alt="{{ car.name }} Image"
+                width="300"
+                class="max-w-sm rounded-lg shadow-2xl"
+            />
+            <div>
+                <h1 class="text-5xl font-bold">{{ car.name }} Details</h1>
+                <div class="py-6">
+                    <p>Description: {{ car.description }}</p>
+                    <p>Brand: {{ car.brand.name }}</p>
+                    <p>Price: ${{ car.price }}</p>
+                </div>
+                <button class="btn btn-success">Buy Now</button>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
