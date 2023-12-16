@@ -1,8 +1,15 @@
 {% extends 'base.html' %} {% block content %}
-<h2>{{ user.username }}'s Purchases</h2>
 
-{% if purchases %}
 <section class="container mx-auto">
+    <p>
+        <a href="{% url 'user_edit' user.id %}" class="btn btn-warning my-8"
+            >Edit Your Profile</a
+        >
+    </p>
+
+    <h2 class="text-xl font-semibold">{{ user.username }}'s Purchases</h2>
+
+    {% if purchases %}
     <div class="grid grid-cols-3 items-cener gap-4 justify-evenly my-4">
         {% for purchase in purchases %}
 

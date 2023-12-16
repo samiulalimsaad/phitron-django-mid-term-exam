@@ -1,10 +1,11 @@
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, TemplateView
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, UpdateView
 
-from car.form import BuyCarForm, CommentForm
+from car.form import BuyCarForm, CommentForm, UserEditForm
 from comment.models import Comment
 
 from .models import Brand, Buy, Car
@@ -92,3 +93,13 @@ class UserPurchasesView(ListView):
         user_id = self.kwargs["user_id"]
         user = User.objects.get(pk=user_id)
         return Buy.objects.filter(user=user).order_by("-purchase_date")
+
+
+class UserEditView(UpdateView):
+    model = User
+    form_class = UserEditForm
+    template_name = "user_edit.html"
+    success_url = reverse_lazy("home")
+
+    def get_object(self, queryset=None):
+        return self.request.user

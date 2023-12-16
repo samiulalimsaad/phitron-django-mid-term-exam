@@ -12,6 +12,7 @@ urlpatterns = [
         {"template_name": "car_detail.html"},
         name="buy_car",
     ),
+    path("user_edit/<int:pk>/", views.UserEditView.as_view(), name="user_edit"),
     path(
         "<int:brand_id>/", views.BrandBasedCarsView.as_view(), name="brand_based_cars"
     ),
