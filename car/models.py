@@ -8,6 +8,7 @@ class Car(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField()
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="car/car_images/", null=True, blank=True)
 
     def __str__(self):
         return f"{self.name} - {self.brand}"
